@@ -1,0 +1,67 @@
+---
+# tasks file for ansible-gitlab-runner
+
+- name: Install requirements for external repositories
+  apt:
+    pkg:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Add an apt signing key for Docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present 
+
+- name: Add Docker repository 
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    update_cache: yes
+    state: present
+    filename: docker
+
+- name: Install Docker
+  apt:
+    pkg:
+      - docker-ce 
+      - docker-ce-cli 
+      - containerd.io
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Add an apt signing key for GitLab Runner
+  apt_key:
+    url: https://packages.gitlab.com/runner/gitlab-runner/gpgkey
+    state: present 
+  
+- name: Add GitLab Runner repository 
+  apt_repository:
+    repo: deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ focal main
+    update_cache: yes
+    state: present
+    filename: runner_gitlab-runner
+
+- name: Install GitLab Runner and dependencies
+  apt:
+    name: gitlab-runner
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Example command for registering GitLab Runner
+  debug:
+    msg: |
+          gitlab-runner register \
+          --non-interactive \
+          --url "https://gitlab.com/" \
+          --registration-token "TOKEN" \
+          --executor "docker" \
+          --docker-image alpine:latest \
+          --tag-list $(uname -m),$(uname -o),docker \
+          --run-untagged="true" \
+          --name "$HOSTNAME"
+
