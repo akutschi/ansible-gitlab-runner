@@ -55,6 +55,8 @@
 - name: Example command for registering GitLab Runner
   debug:
     msg: |
+          ssh {{ ansible_user }}@{{ ansible_fqdn }} \
+          ' \
           gitlab-runner register \
           --non-interactive \
           --url "https://gitlab.com/" \
@@ -63,5 +65,6 @@
           --docker-image alpine:latest \
           --tag-list $(uname -m),$(uname -o),docker \
           --run-untagged="true" \
-          --name "$HOSTNAME"
+          --name "$HOSTNAME" \
+          '
 
