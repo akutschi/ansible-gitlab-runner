@@ -1,5 +1,7 @@
 # Ansible GitLab Runner
 
+[![CI](https://github.com/akutschi/ansible_gitlab_runner/actions/workflows/ci.yml/badge.svg)](https://github.com/akutschi/ansible_gitlab_runner/actions/workflows/ci.yml)
+
 This is a very simple role to install the GitLab Runner and the Docker components.
 
 ## Requirements
