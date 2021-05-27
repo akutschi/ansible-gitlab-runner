@@ -12,17 +12,35 @@
     update_cache: yes
     cache_valid_time: 3600
 
-- name: Add an apt signing key for Docker
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present 
+- name: Docker repository (Ubuntu)
+  block:
+    - name: Add an apt signing key for Docker
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present 
 
-- name: Add Docker repository 
-  apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
-    update_cache: yes
-    state: present
-    filename: docker
+    - name: Add Docker repository 
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        update_cache: yes
+        state: present
+        filename: docker
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: Docker repository (Debian)
+  block:
+    - name: Add an apt signing key for Docker
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present 
+
+    - name: Add Docker repository 
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
+        update_cache: yes
+        state: present
+        filename: docker
+  when: ansible_facts['distribution'] == 'Debian'
 
 - name: Install Docker
   apt:
@@ -38,12 +56,21 @@
     url: https://packages.gitlab.com/runner/gitlab-runner/gpgkey
     state: present 
   
-- name: Add GitLab Runner repository 
+- name: Add GitLab Runner repository for Ubuntu
   apt_repository:
-    repo: deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ focal main
+    repo: deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ {{ ansible_distribution_release }} main
     update_cache: yes
     state: present
     filename: runner_gitlab-runner
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: Add GitLab Runner repository for Debian
+  apt_repository:
+    repo: deb https://packages.gitlab.com/runner/gitlab-runner/debian/ {{ ansible_distribution_release }} main
+    update_cache: yes
+    state: present
+    filename: runner_gitlab-runner
+  when: ansible_facts['distribution'] == 'Debian'
 
 - name: Install GitLab Runner and dependencies
   apt:
