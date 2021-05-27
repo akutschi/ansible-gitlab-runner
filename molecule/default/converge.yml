@@ -2,6 +2,8 @@
 - name: Converge
   hosts: all
   become: yes
+  vars: 
+    ansible_user: root
   tasks:
     - name: Include role
       include_role: 

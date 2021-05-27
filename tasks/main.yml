@@ -48,7 +48,7 @@
 - name: Install GitLab Runner and dependencies
   apt:
     name: gitlab-runner
-    state: latest
+    state: present
     update_cache: yes
     cache_valid_time: 3600
 
@@ -67,4 +67,3 @@
           --run-untagged="true" \
           --name "$HOSTNAME" \
           '
-
