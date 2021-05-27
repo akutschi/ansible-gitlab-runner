@@ -6,8 +6,22 @@ This is a very simple role to install the GitLab Runner and the Docker component
 
 ## Requirements
 
-- This version requires Ubuntu 20.04 LTS
-- Ansible 2.9.x, this role is **not tested with Ansible 2.10** yet.
+This role does not have any requirements.
+
+## Coverage
+
+Any combination of the following is tested:
+
+- Operating System
+  - Ubuntu 20.04 LTS or
+  - Debian 10
+- Ansible
+  - 2.9.x or
+  - 3.x or
+  - 4.x 
+- Python
+  - 3.8 or
+  - 3.9
 
 ## Role Variables
 
@@ -49,8 +63,6 @@ The token for group and repo runners can be found under `Settings -> CI/CD -> Ru
 
 The reason for this manual step is, that one machine can have several runner configurations. 
 And on top of that, if there will be several machines deployed for different architectures things get quickly difficult.
-
-> For the moment I have no idea how to deploy this role to multiple machines, where the machines itself have several different runner configurations.
 
 # License
 
