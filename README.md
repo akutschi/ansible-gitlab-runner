@@ -24,7 +24,7 @@ Just clone or download this role into your `roles` folder and set up the playboo
 ---
 - hosts: servers
   roles:
-      - ansible-gitlab-runner
+      - ansible_gitlab_runner
 ```
 
 ## Register Runner
