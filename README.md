@@ -13,15 +13,23 @@ This role does not have any requirements.
 Any combination of the following is tested:
 
 - Operating System
-  - Ubuntu 20.04 LTS or
+  - Ubuntu 20.04 LTS
   - Debian 10
 - Ansible
-  - 2.9.x or
-  - 3.x or
+  - 2.9.x
+  - 3.x
   - 4.x 
 - Python
-  - 3.8 or
+  - 3.8
   - 3.9
+
+## Install Role
+
+To install this role into your `roles` folder just clone, download or run: 
+
+```bash
+ansible-galaxy install --roles-path ./roles git+https://github.com/akutschi/ansible_gitlab_runner.git,v0.2.0
+```
 
 ## Role Variables
 
@@ -32,9 +40,6 @@ There are no settable variables in this role.
 This role does not have any dependencies.
 
 ## Example Playbook
-
-The setup is quite simple.
-Just clone or download this role into your `roles` folder and set up the playbook similar to this example:
 
 ```yml
 ---
